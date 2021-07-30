@@ -5,11 +5,14 @@
 </template>
 
 <script>
+
+import { store } from '../store'
+
 export default {
 
-  emits: [
-    'setHashtag'
-  ],
+  // emits: [
+  //   'setHashtag'
+  // ],
 
   props: {
     hashtag: {
@@ -21,7 +24,7 @@ export default {
   setup(props, ctx) {
 
     const setHashtag = () => {
-      ctx.emit('setHashtag', props.hashtag)
+      store.setHashtag(props.hashtag)
     }
 
     return { setHashtag}

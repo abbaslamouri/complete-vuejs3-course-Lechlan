@@ -1,14 +1,14 @@
 <template>
-<Card v-for='post in store.state.posts' :key='post.id' @click='click(post)' class='card'>
-      <template v-slot:title>{{ post.title }}</template>
-      <template v-slot:content>{{ post.content }}</template>
-      <template v-slot:description><Controls :post='post' @setHashtag='setHashtag'/></template>
-    </Card>
-    Current {{currentTag}}
+<input :value='currentTag' @input='setHashtag'>
+<Card v-for='post in filteredPosts' :key='post.id' class='card'>
+  <template v-slot:title>{{ post.title }}</template>
+  <template v-slot:content>{{ post.content }}</template>
+  <template v-slot:description><Controls :post='post'/></template>
+</Card>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { store } from './store'
 import Card from '../pokemon/components/Card.vue'
 import Controls from './components/Controls.vue'
@@ -22,12 +22,15 @@ export default {
 
   setup() {
 
-    const currentTag = ref()
-    const setHashtag = (hashtag) => {
-      currentTag.value = hashtag
+    const setHashtag = ($event) => {
+      store.setHashtag($event.target.value)
     }
 
-    return { store, setHashtag, currentTag }
+    return { 
+      filteredPosts: computed(() => store.filteredPosts()), 
+      currentTag: computed ( () => store.state.currentTag ),
+      setHashtag
+    }
 
   }
 
