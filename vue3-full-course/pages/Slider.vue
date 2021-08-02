@@ -1,9 +1,7 @@
 <template>
   <h1>Slider Carousel</h1>
-  <div class='slider'>
-    <div class="slider1" v-if='currentSlider === 0'></div>
-    <div class="slider2" v-if='currentSlider === 1'></div>
-    <div class="slider3" v-if='currentSlider === 2'></div>
+  <div v-for='(slide, index) in slides' :key='index' >
+    <div class='slide' v-if='currentSlider === index' :style='{backgroundColor: slide.bgColor}'></div>
   </div>
 </template>
 
@@ -17,6 +15,11 @@ export default {
 
     const currentSlider = ref(0)
     const interval = ref('')
+    const slides = ref([
+      {bgColor: 'red'},
+      {bgColor: 'blue'},
+      {bgColor: 'teal'},
+    ])
 
     onMounted( () => {
       interval.value = setInterval(() => {
@@ -29,7 +32,8 @@ export default {
     })
 
     return {
-      currentSlider
+      slides,
+      currentSlider,
     }
   }
 
@@ -38,28 +42,9 @@ export default {
 
 <style>
 
-.slider {
-  position:relative;
-}
-.slider .slider1 {
+.slide {
   height:350px;
   width:100%;
-  background-color: red;
-  position:absolute;
-}
-
-.slider .slider2 {
-  height:350px;
-  width:100%;
-  background-color: blue;
-  position:absolute;
-}
-
-.slider .slider3 {
-  height:350px;
-  width:100%;
-  background-color: teal;
-  position:absolute;
 }
 
 </style>
