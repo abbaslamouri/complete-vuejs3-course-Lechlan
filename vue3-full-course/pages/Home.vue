@@ -17,11 +17,11 @@ export default {
 
 
 .home {
-  background-color:$primary;
+  // background-color:$primary;
   
 
   &__h1 {
-    color: $secondary;
+    // color: $secondary;
   }
 }
 

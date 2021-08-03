@@ -20,6 +20,7 @@ export default {
       {to: '/calendar', title: 'Calendar'},
       {to: '/markdown', title: 'Markdown'},
       {to: '/slider', title: 'Slider'},
+      {to: '/accordion', title: 'Accordion'},
     ])
 
     const login = () => {

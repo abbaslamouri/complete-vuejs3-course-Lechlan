@@ -4,6 +4,7 @@ import Heroes from './pages/Heroes.vue'
 import Calendar from './pages/Calendar.vue'
 import Markdown from './pages/Markdown.vue'
 import Slider from './pages/Slider.vue'
+import Accordion from './pages/Accordion.vue'
 
 const router = createRouter( {
   history:createWebHistory(),
@@ -27,7 +28,12 @@ const router = createRouter( {
     {
       path: '/slider',
       component: Slider,
+    },
+    {
+      path: '/accordion',
+      component: Accordion,
     }
+
 
   ]
 })
