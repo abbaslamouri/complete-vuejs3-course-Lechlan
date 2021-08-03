@@ -13,7 +13,7 @@
     </form>
 </template>
 
-<script scoped>
+<script>
 import { ref, computed } from 'vue'
 
 export default {

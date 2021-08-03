@@ -1,6 +1,7 @@
 <template>
 <div class='header'>
   <router-link v-for='link in links' :key='link.to' :to='link.to'>{{ link.title }}</router-link>
+  <a href="#" @click='login'>Login</a>
 </div>
     
 </template>
@@ -11,7 +12,7 @@ import { reactive, ref } from 'vue'
 
 export default {
 
-  setup() {
+  setup(props, ctx) {
 
     const links = reactive([
       {to: '/', title: 'Home'},
@@ -21,13 +22,20 @@ export default {
       {to: '/slider', title: 'Slider'},
     ])
 
-    return {links}
+    const login = () => {
+      ctx.emit ('toggleModal', true)
+    } 
+
+    return {
+      links,
+      login
+      }
   }
 
 }
 </script>
 
-<style>
+<style scoped>
 
 .header {
   background-color: aquamarine;
