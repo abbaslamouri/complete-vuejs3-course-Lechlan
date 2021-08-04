@@ -4,7 +4,7 @@
     <li v-for='(item, index) in list' :key='`item${index}`'>
       <div class='title' @click='item.open = ! item.open'>
         {{ item.title }}
-        <fa :class='{"open" : item.open}' icon='angle-right' />
+        <fa :class='{"open" : item.open}' icon='chevron-right' />
       </div>
       <listItem :item='item' />
     </li>

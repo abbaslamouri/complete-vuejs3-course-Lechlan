@@ -10,11 +10,11 @@
         <form @submit.prevent='submit'>
           <div class="form-group">
             <label for="">Email</label>
-            <input type="text">
+            <input v-model='username' type="text" placeholder='Email'>
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input type="password">
+            <input v-model='password' type="password" placeholder='Password'>
           </div>
           <button class='submit-btn' type='submit'>Login</button>
         </form>
@@ -28,7 +28,9 @@
 
 <script>
 
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import firebase from 'firebase'
 import AppHeader from './components/AppHeader.vue'
 import LoginModal from './components/LoginModal.vue'
 
@@ -41,7 +43,21 @@ export default {
 
   setup(props, ctx) {
 
+    const router = useRouter()
+    const route = useRoute()
     const showModal = ref(false)
+    const username = ref('')
+    const password = ref('')
+
+    onBeforeMount(() => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user){
+          router.replace('/accordion')
+        } else if (route.path == '/login' || route.path == '/register' ){
+          router.replace('/')
+        }
+      })
+    })
     
     const click = (event) => {
       if (event.target.classList.contains('backdrop') || event.target.classList.contains('close-modal') ) showModal.value = false
@@ -52,10 +68,13 @@ export default {
     }
 
     const submit = () => {
+
       showModal.value = false
     }
 
     return {
+      username,
+      password,
       showModal,
       click,
       toggleModal,
