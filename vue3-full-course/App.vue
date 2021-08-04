@@ -30,7 +30,7 @@
 
 import { ref, onBeforeMount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import firebase from 'firebase'
+import { db } from './firebase/config'
 import AppHeader from './components/AppHeader.vue'
 import LoginModal from './components/LoginModal.vue'
 
@@ -50,13 +50,13 @@ export default {
     const password = ref('')
 
     onBeforeMount(() => {
-      firebase.auth().onAuthStateChanged(user => {
-        if (!user){
-          router.replace('/accordion')
-        } else if (route.path == '/login' || route.path == '/register' ){
-          router.replace('/')
-        }
-      })
+      // db.auth().onAuthStateChanged(user => {
+      //   if (!user){
+      //     router.replace('/accordion')
+      //   } else if (route.path == '/login' || route.path == '/register' ){
+      //     router.replace('/')
+      //   }
+      // })
     })
     
     const click = (event) => {
