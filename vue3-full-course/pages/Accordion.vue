@@ -2,7 +2,11 @@
   <h1>Accordion</h1>
   <ul class="wrapper">
     <li v-for='(item, index) in list' :key='`item${index}`'>
-      <div class='title'>{{ item.title }}<fa class='arrowIcon' icon='angle-right' /></div>
+      <div class='title' @click='item.open = ! item.open'>
+        {{ item.title }}
+        <fa :class='{"open" : item.open}' icon='angle-right' />
+      </div>
+      <listItem :item='item' />
     </li>
   </ul>
 </template>
@@ -65,12 +69,15 @@ export default {
   box-shadow: 0 2px rgba($color: black, $alpha: .15);
   border-radius: 4px;
   overflow: hidden;
+  margin:0 auto;
+  padding:0;
 
   li {
     position:relative;
     color: #555;
     border-top: 1px solid #dedede;
     cursor: pointer;
+    padding:0;
 
     .title {
       padding: 1rem .5rem;
@@ -79,9 +86,12 @@ export default {
       justify-content: space-between;
       align-items:flex-end;
 
-      .arrowIcon {
-        color:red;
-        transform: rotate(90Deg)
+      svg {
+        
+        transition: all .3s ease;
+        &.open {
+          transform: rotateZ(90Deg);
+        }
       }
     }
 
