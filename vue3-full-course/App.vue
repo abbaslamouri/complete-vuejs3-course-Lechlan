@@ -20,7 +20,7 @@
         </form>
       </template>
       <template #footer>
-        <p></p>
+        <p>footer</p>
       </template>
     </LoginModal>
   </teleport>

@@ -5,7 +5,7 @@
 
 <script>
 import { computed } from 'vue'
-import {useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 import { usePosts} from './usePosts'
 export default {
   setup() {

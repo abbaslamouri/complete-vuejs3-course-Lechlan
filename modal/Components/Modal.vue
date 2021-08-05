@@ -1,7 +1,7 @@
 <template>
-  <div class='backdrop'>
+  <div class='backdrop' @click.self='close'>
     <div class="outer-box">
-      <div class="modal" :class='modalCssClass'>
+      <div class="modal" :class='{dark: theme === "dark", ligth: theme === "light"}'>
       <div class="modal__header">
         <slot name="header"></slot>
         <div class='close-modal'>X</div>  
@@ -9,44 +9,44 @@
       <div class="modal__content">
         <slot></slot>
       </div>
-      <div class="Modal__footer"><slot name="footer"></slot></div>
+      <div class="Modal__footer">
+        <slot name="footer"></slot>
+      </div>
     </div>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
 
   props: {
     theme: {
-      type: String,
-      default: 'light'
+      type: String
     }
   },
 
-  setup(props) {
-
-    const modalCssClass = props.theme === 'light' ? 'light' : props.theme === 'dark' ? 'dark' : 'light'
+  setup(props, ctx) {
+    const close = (event) => {
+      ctx.emit('closeModal', event.target)
+    }
 
     return {
-      modalCssClass,
+      close,
     }
   }
 
 }
-
 </script>
 
-<style lang='scss' scoped>
-.backdrop{
+<style scoped lang='scss'>
+  .backdrop{
   display:flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.8);
   position:fixed;
   top:0;
   left:0;
@@ -93,36 +93,6 @@ export default {
 
     }
 
-    // &__content {
-
-      // .form-group {
-      //   display:flex;
-      //   flex-direction: column;
-      //   margin-bottom: 2rem;
-
-      //   input {
-      //     padding:.8rem 2rem;
-      //     margin-top:.2rem;
-      //     border:none;
-      //     background-color: rgba($color: rgb(211, 199, 199), $alpha: .15);
-      //     outline: none;
-      //     box-shadow: 1px 2px 2px rgba($color: black, $alpha: .15);
-      //   }
-      // }
-
-      // .submit-btn {
-      //   display:block;
-      //   width: 100%;
-      //   padding:.5rem 2rem;
-      //   font-size: 120%;
-      //   background-color: purple;
-      //   color: #FFF; 
-      //   margin-top: 3rem;
-      //   border-radius:5px;
-      //   cursor:pointer;    
-      // }
-    // }
   }
 }
-
 </style>
