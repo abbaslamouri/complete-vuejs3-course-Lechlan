@@ -1,17 +1,22 @@
 {
   "projects": [
-    { 
-      "id": 1, 
-      "title": "Create new homepage planner", 
-      "details": "lorem ipsum" ,
+    {
+      "id": 1,
+      "title": "Create new homepage planner",
+      "details": "lorem ipsum",
       "complete": false
     },
-    { 
-      "id": 2, 
-      "title": "Create new campaign", 
-      "details": 
-      "ipsum lorem" ,
+    {
+      "id": 2,
+      "title": "Create new campaign",
+      "details": "ipsum lorem",
       "complete": true
+    },
+    {
+      "title": "Empty trashyasdasasd",
+      "details": "sadsatomorrowydsffdsfdddsddsdsf",
+      "complete": true,
+      "id": 3
     }
   ]
 }

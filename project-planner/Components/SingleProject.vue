@@ -1,16 +1,18 @@
 <template>
-<div class="project">
+<div class="project" :class='{complete: project.complete}'>
   <div class="actions">
     <h3 @click='showDetails = ! showDetails'>{{ project.title }}</h3>
     <div class="icons">
-      <span class="material-icons edit">edit</span>
+      <router-link :to='{name: "EditProject", params: { id: project.id }}'><span class="material-icons edit">edit</span></router-link>
       <span class="material-icons delete" @click='deleteProject(project)'>delete</span>
-      <span class="material-icons done">done</span>
+      <span class="material-icons done" @click='toggleComplete(project)'>done</span>
     </div>
   </div>
   <div v-if='showDetails' class='details'>
     <p>{{ project.details }}</p>
   </div>
+      <p>{{project}}</p>
+
 </div>
 </template>
 
@@ -30,16 +32,27 @@ export default {
   setup(props, ctx) {
         
     const showDetails = ref(false)
+    const baseUri = ref(`http://localhost:3001/projects/`)
 
-    const deleteProject = (project) => {
-      console.log(project)
-      ctx.emit('delete', project.id)
+    const deleteProject = async (project) => {
+      const response = await fetch(`${baseUri.value}${project.id}`, {method: 'DELETE'})
+      if ( response.status === 200 ) ctx.emit('deleteProject', project.id)
+    }
+
+    const toggleComplete = async (project) => {
+      const response = await fetch(`${baseUri.value}${project.id}`, 
+        {method: 'PATCH', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({complete: ! project.complete})
+      })
+      if ( response.status === 200 ) ctx.emit('complete', project.id)
     }
 
 
     return {
       showDetails,
-      deleteProject
+      deleteProject,
+      toggleComplete
     }
   }
 
@@ -48,17 +61,21 @@ export default {
 
 <style scoped lang='scss'>
 
-$red-color: red;
-$green-color: green;
-$grey-color: #444;
+  $red-color: red;
+  $green-color: #00ce89;
+  $grey-color: #444;
 
-.project {
+  .project {
     margin: 20px auto;
     background: white;
     padding: 10px 20px;
     border-radius: 4px;
     box-shadow: 1px 2px 3px rgba(0,0,0,0.05);
     border-left: 4px solid #e90074;
+
+    &.complete {
+      border-left: 4px solid #00ce89;
+    }
   }
   h3 {
     cursor: pointer;

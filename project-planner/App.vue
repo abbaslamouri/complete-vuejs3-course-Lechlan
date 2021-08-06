@@ -1,20 +1,16 @@
 <template>
- <div id="nav">
-    <!-- <router-link :to='{name: "Home"}'>Home</router-link> |
-    <router-link :to='{name: "About"}'>About</router-link> |
-    <router-link :to='{name: "Jobs"}'>Jobs</router-link>  -->
-  </div>
-  <!-- <h1>Welcome to Ninja Jobs</h1>
-  <button @click='redirect("About")'>Redirect</button>
-  <button @click='back'>Back</button>
-  <button @click='forward'>Forwards</button> -->
-  <router-view></router-view>
+  <NavBar />
+  <router-view />
 </template>
 
 <script>
 
 import { useRouter } from 'vue-router'
+import NavBar from './Components/NavBar.vue'
+
 export default {
+
+  components: { NavBar },
 
   setup() {
 
