@@ -8,11 +8,14 @@ const getPosts = () => {
   const load = async() => {
     try {
 
-      const res  = await db.collection("posts").get()
-      posts.value = res.docs.map(doc => {
-        return {...doc.data(), id: doc.id}
+      // simulate delay
+      await new Promise( resolve => {
+        setTimeout(resolve, 1000)
       })
-
+      
+      const response = await fetch(`http://localhost:3001/posts`)
+      if( !response.ok ) throw Error('No data available')
+      posts.value = await response.json()
     } catch (err) {
       error.value = err.message
     }

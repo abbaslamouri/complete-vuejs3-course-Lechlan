@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <form>
+    <form @submit.prevent='submit'>
       <label>Title:</label>
       <input v-model="title" type="text" required>
       <label>Content:</label>
@@ -22,8 +22,10 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   setup() {
+    const router = useRouter()
     const title = ref('')
     const body = ref('')
     const tags = ref([])
@@ -35,7 +37,27 @@ export default {
       }
       tag.value = ''
     }
-    return { body, title, tags, tag, handleKeydown }
+
+    console.log(router)
+
+    const submit = async() => {
+
+       const post = {
+        title: title.value,
+        body: body.value,
+        tags: tags.value
+      }
+      const response = await fetch(`http://localhost:3001/posts`, 
+        {method: 'POST', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(post)
+      })
+
+      console.log(response)
+      if ( response.status === 201 ) router.push({name: 'Home'})
+    }
+
+    return { body, title, tags, tag, handleKeydown, submit }
   },
 }
 </script>
