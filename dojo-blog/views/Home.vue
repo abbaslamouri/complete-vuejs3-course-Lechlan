@@ -2,13 +2,15 @@
   <div class="home">
     <h1>Home</h1>
     <div v-if='error'>{{ error }}</div>
-    <div v-if='posts.length' class='layout'>
+    <div v-else>
+      <div v-if='posts.length' class='layout'>
       <PostList :posts="posts" />
       <TagCloud :posts="posts" />
     </div>
     <div v-if='!posts.length && !error'>
       Loading ...
       <Spinner />
+    </div>
     </div>
   </div>
 </template>
@@ -27,6 +29,7 @@ export default {
     const { load, posts, error } = getPosts()
 
     load()
+
     
     return { 
       posts,

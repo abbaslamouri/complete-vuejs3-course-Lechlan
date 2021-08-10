@@ -23,6 +23,7 @@
 <script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { db, timestamp } from '../firebase/config'
 export default {
   setup() {
     const router = useRouter()
@@ -38,23 +39,24 @@ export default {
       tag.value = ''
     }
 
-    console.log(router)
-
     const submit = async() => {
 
        const post = {
         title: title.value,
         body: body.value,
-        tags: tags.value
+        tags: tags.value,
+        createdAt: timestamp()
       }
-      const response = await fetch(`http://localhost:3001/posts`, 
-        {method: 'POST', 
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(post)
-      })
 
-      console.log(response)
-      if ( response.status === 201 ) router.push({name: 'Home'})
+      const res = await db.collection("posts").add(post)
+      // const response = await fetch(`http://localhost:3001/posts`, 
+      //   {method: 'POST', 
+      //   headers: {'Content-Type': 'application/json'},
+      //   body: JSON.stringify(post)
+      // })
+
+      // console.log(res)
+      if ( res.id ) router.push({name: 'Home'})
     }
 
     return { body, title, tags, tag, handleKeydown, submit }

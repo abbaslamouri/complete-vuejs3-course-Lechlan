@@ -8,7 +8,7 @@ const getPosts = () => {
   const load = async() => {
     try {
 
-      const res  = await db.collection("posts").get()
+      const res  = await db.collection("posts").orderBy('createdAt', 'desc').get()
       posts.value = res.docs.map(doc => {
         return {...doc.data(), id: doc.id}
       })
