@@ -9,16 +9,16 @@ const isPending = ref(false)
 const logout = async () => {
 
   error.value = null
-  isPending = true
+  isPending.value = true
 
   try {
     await auth.signOut()
-    isPending = false
+    isPending.value = false
 
   } catch (err) {
     console.log(err.message)
     error.value = err.mesage
-    isPending = false
+    isPending.value = false
 
   }
 

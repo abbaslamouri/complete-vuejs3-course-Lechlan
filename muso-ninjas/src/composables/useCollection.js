@@ -9,15 +9,15 @@ const useCollection = (collection) =>{
 
   const addDoc = async(doc) => {
     error.value = null
-    isPending = true
+    isPending.value = true
     try {
       await db.collection(collection).add(doc)
-      isPending = false
+      isPending.value = false
 
     } catch (err) {
       console.log(err.message)
       error.value = err.message
-      isPending = false
+      isPending.value = false
     }
   }
 
