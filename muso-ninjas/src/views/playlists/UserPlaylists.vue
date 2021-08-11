@@ -1,20 +1,25 @@
 <template>
-  <div class="user-playlists">
-    <h2>My Playlists</h2>{{ playlists}}
+  <div v-if="playlists" class="user-playlists">
+    <ListView :playlists="playlists" />
   </div>
+  <div v-if="error" class="error">{{ error }}</div>
 </template>
 
 <script>
 
+import ListView from "../../components/ListView.vue"
 import getCollection from "../../composables/getCollection"
 import getUser from "../../composables/getUser"
+
 export default {
+
+  components: {ListView},
 
   setup() {
     const { user } = getUser()
     const { documents: playlists, error } = getCollection("playlists", ["userId", "==", user.value.uid])
 
-    return {playlists}
+    return {playlists, error}
   }
 
 
