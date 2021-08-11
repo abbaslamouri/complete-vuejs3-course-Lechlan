@@ -4,30 +4,39 @@
       <router-link :to="{ name: 'Home' }"><img src="../assets/ninja.png"/></router-link>
       <h1><router-link :to="{ name: 'Home' }">Muso Ninjas</router-link></h1>
       <div class="links">
-        <button @click='handleLogout'>Logout</button>
-        <router-link class="btn" :to="{ name: 'Signup' }">Signup</router-link>
-        <router-link class="btn" :to="{ name: 'Login' }">Login</router-link>
+        <div v-if="user">
+          <router-link :to="{name: 'UserPlaylists'}">MyPlaylist</router-link>
+          <router-link :to="{name: 'CreatePlaylist'}">Create Playlist</router-link>
+          <button  @click='handleLogout'>Logout</button>
+        </div>
+        <div v-else>
+          <router-link class="btn" :to="{ name: 'Signup' }">Signup</router-link>
+          <router-link class="btn" :to="{ name: 'Login' }">Login</router-link>
+        </div>
       </div>
     </nav>
   </div>
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
 import useLogout from '../composables/useLogout'
+import getUser from "../composables/getUser.js"
+
 export default {
 
   setup () {
 
+    const router = useRouter()
     const {logout, isPending, error} = useLogout()
+    const { user } = getUser()
 
-    const handleLogout = () => {
-      logout()
-      if (!error.value ) console.log('User logged out succesfully')
+    const handleLogout = async () => {
+      await logout()
+      if (!error.value ) router.push({name: "Login"})
     }
 
-
-
-    return {handleLogout, isPending, error }
+    return {handleLogout, isPending, error, user }
   }
 }
 </script>
